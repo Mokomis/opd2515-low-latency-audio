@@ -107,6 +107,14 @@ The client's audio was about 140 ms behind its video. Part of that was the clien
 - OPPO Pad Mini OPD2515, or a device whose `/system_ext/etc/Multimedia_Daemon_List.xml` contains both lists.
 - An unlocked, rooted tablet with a working `su`. Tested with KernelSU.
 
+## Other tools for this tablet
+
+Separate root utilities for the OPPO Pad Mini OPD2515. Each works by itself.
+
+- [Wi-Fi 7 Toggle](https://github.com/Mokomis/WiFi-7-Toggle): enables or restores the tablet's 6 GHz / Wi-Fi 7 band capability.
+- [Refresh Manager](https://github.com/Mokomis/opd2515-refresh-manager): lets any app use 144 Hz, or locks an app to 60, 120 or 144 Hz.
+- [GPU Clock Floor](https://github.com/Mokomis/adreno-clock-floor): holds the Adreno GPU clock at a chosen minimum, for steadier GPU work such as video decode while streaming.
+
 ## License
 
 GPL-3.0-only. See [LICENSE](LICENSE). The scripts copy the device's own list file on the device; no OPPO file is distributed here.
