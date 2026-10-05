@@ -86,6 +86,9 @@ The sound was judged the same by ear. The tablet's output did not run dry during
 
 **The direct path is still refused.** After the change the log still shows `aaudio denied`, with `getListValueByUid(aaudio-compatible-apps)` returning nothing for the app, even though the same file's second list took effect. The two checks use different lookups. My guess is that the first goes through a part of the system that loads the list only at boot; that was not tested, because the tablet has not been rebooted since the change.
 
+> [!NOTE]
+> **Still to be tested, and possibly more to gain.** The direct path is the fastest of the three, so if a reboot (or another way of getting the app onto the first list) opens it, the output delay could fall further than the 43 ms measured here. How much is unknown on this tablet. It is also the path furthest from the stock one, so it is the more likely of the two to sound different. If you try it, the `logcat` line above shows which path the app was given.
+
 ## Test status
 
 Tested on one OPPO Pad Mini OPD2515, ColorOS 16 / Android 16, KernelSU, on October 4, 2026:
