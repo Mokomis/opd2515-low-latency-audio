@@ -46,7 +46,7 @@ Copy both scripts to the tablet, then from a root shell:
 su -c 'sh enable.sh com.example.game another.example.app'
 ```
 
-Sound stops for a few seconds while the audio service restarts. No reboot is needed. Each run starts again from the built-in list, so name every app you want each time.
+Sound stops for a few seconds while the audio service restarts. That is enough for the ultra-low-latency path. The direct path is only granted after the next reboot; see [the direct path](#the-direct-path-needs-a-reboot). Each run starts again from the built-in list, so name every app you want each time.
 
 To undo:
 
@@ -75,19 +75,20 @@ One app, [Punktfunk](https://git.unom.io/unom/punktfunk) (a game-streaming clien
 
 | | Stock | With the app listed |
 |---|---|---|
-| Path given | Ordinary fast | Ultra low latency ("raw") |
+| Path given | Ordinary fast | Ultra low latency ("raw"); direct after a reboot |
 | "denied raw flag" in the log | Yes | No |
 | Output delay Android reports (`mAfLatency`) | 61 ms | 43 ms |
 | Audio behind the picture at rest, as the client measures it | 71–73 ms | 55–63 ms |
 
 The sound was judged the same by ear. The tablet's output did not run dry during play in any session after the change.
 
-## What did not work
+## The direct path needs a reboot
 
-**The direct path is still refused.** After the change the log still shows `aaudio denied`, with `getListValueByUid(aaudio-compatible-apps)` returning nothing for the app, even though the same file's second list took effect. The two checks use different lookups. My guess is that the first goes through a part of the system that loads the list only at boot; that was not tested, because the tablet has not been rebooted since the change.
+Restarting the audio service is enough for the ultra-low-latency path, but not for the direct one. Straight after the change the log still showed `aaudio denied`, with `getListValueByUid(aaudio-compatible-apps)` returning nothing for the app, even though the same file's second list had taken effect.
 
-> [!NOTE]
-> **Still to be tested, and possibly more to gain.** The direct path is the fastest of the three, so if a reboot (or another way of getting the app onto the first list) opens it, the output delay could fall further than the 43 ms measured here. How much is unknown on this tablet. It is also the path furthest from the stock one, so it is the more likely of the two to sound different. If you try it, the `logcat` line above shows which path the app was given.
+After the tablet had been rebooted, the direct path was granted with no further change. On October 9, 2026, during a stream, `dumpsys media.aaudio` listed one exclusive MMAP endpoint owned by the app, with a 48-frame (1 ms) burst, and the log held no `aaudio denied` line. So the part of the system that answers the first lookup reads the list at boot.
+
+How much delay the direct path removes beyond the 43 ms measured above was not measured. It sounded the same by ear.
 
 ## Test status
 
@@ -96,7 +97,8 @@ Tested on one OPPO Pad Mini OPD2515, ColorOS 16 / Android 16, KernelSU, on Octob
 - The list file made by `enable.sh` was generated on the tablet in preview mode and compared with the one installed by hand: identical apart from the version date.
 - Installing, setting ownership and restarting the audio service were done by hand with the same commands the script runs. The script's own install step and `restore.sh` were not run.
 - The ultra-low-latency path was granted and used across several sessions the same evening.
-- Not tested: a reboot, headphones or Bluetooth, any other app, power draw, any other OPPO, OnePlus or realme device. The file name and list names may differ on other firmware; the script stops if it does not find exactly one of each list.
+- After reboots (seen October 9, 2026): the added file was still in place and the app held the direct path. Its output delay was not measured.
+- Not tested: headphones or Bluetooth, any other app, power draw, any other OPPO, OnePlus or realme device. The file name and list names may differ on other firmware; the script stops if it does not find exactly one of each list.
 
 ## How it was found
 
