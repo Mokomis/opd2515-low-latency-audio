@@ -1,5 +1,8 @@
 # Low-latency audio on the OPPO Pad Mini
 
+> [!IMPORTANT]
+> **The scripts here (`enable.sh`, `restore.sh`) are deprecated and no longer updated.** Choosing apps for low-latency audio is now part of **[Ember](https://github.com/Mokomis/ember)** (the Apps page), one app for the OPPO Pad Mini that keeps every other allowlist entry and can restore the original file. The research on this page is unchanged and remains the reference. This repository is archived (read-only) and stays online for reference.
+
 ColorOS 16 on the **OPPO Pad Mini OPD2515** refuses Android's low-latency audio paths to almost every app. This repository documents how that block works and gives a small root script that adds apps of your choice to the two lists that control it.
 
 > [!WARNING]
