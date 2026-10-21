@@ -8,6 +8,10 @@ ColorOS 16 on the **OPPO Pad Mini OPD2515** refuses Android's low-latency audio 
 > [!WARNING]
 > This changes how the tablet's audio service treats the apps you name. It needs root. The paths it unlocks skip part of the system's sound processing, which OPPO keeps ordinary apps away from, by its own log message, for "performance noise". It was tested with one app on one tablet. Use it at your own risk.
 
+## Android manager (test build)
+
+[OPD2515 Audio Manager](docs/AUDIO_MANAGER.md) provides root-based per-app toggles, preserves existing selections, detects conflicting overrides and retains a pre-manager backup. The original research and scripts below are unchanged; script reruns still start from stock. See the [implementation verification](docs/VERIFICATION.md) for tested scope and limitations.
+
 ## What ColorOS does
 
 Android offers apps three output paths on this tablet, fastest first:
